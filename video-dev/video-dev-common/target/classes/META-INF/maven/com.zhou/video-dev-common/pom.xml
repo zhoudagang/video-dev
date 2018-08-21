@@ -23,7 +23,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- 引入log4j日志依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,6 +41,23 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- 资源配置 -->
@@ -151,6 +167,9 @@
 			<version>4.0.0</version>
 		</dependency>
 
+		
+		
+		
 	</dependencies>
 
 </project>

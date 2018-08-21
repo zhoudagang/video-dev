@@ -2,6 +2,7 @@ package com.zhou.service.impl;
 
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,7 @@ import com.zhou.mapper.UsersMapper;
 import com.zhou.pojo.Users;
 import com.zhou.service.IUserService;
 
+@Service
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
