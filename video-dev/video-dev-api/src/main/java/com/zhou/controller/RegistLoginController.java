@@ -40,5 +40,24 @@ public class RegistLoginController {
 		}
 		return ZhouJSONResult.ok();
 	}
+	
+	@ApiOperation(value="用户登陆", notes="用户登陆的接口")
+	@RequestMapping("/login")
+	public ZhouJSONResult login(@RequestBody Users users) throws Exception {
+		String username = users.getUsername();
+		String password = users.getPassword();
+		// 判断用户名或密码是否为空
+		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+			return ZhouJSONResult.errorMsg("用户名和密码为空!");
+		}
+		// 用户名是否存在
+		Users userResult = userService.queryUserForLogin(username, MD5Utils.getMD5Str(password));
+		if (null == userResult) {
+			return ZhouJSONResult.errorMsg("用户名或密码不正确！");
+		}else {
+			return ZhouJSONResult.ok(userResult);
+		}
+	}
+	
 
 }

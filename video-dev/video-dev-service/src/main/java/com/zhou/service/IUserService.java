@@ -23,4 +23,12 @@ public interface IUserService {
 	 */
 	void addUser(Users user);
 	
+	/**
+	 * 判断用户是否存在
+	 * @param user
+	 * @return
+	 */
+	Users queryUserForLogin(String username,String password);
+	
+	
 }
