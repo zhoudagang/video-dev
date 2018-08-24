@@ -30,5 +30,17 @@ public interface IUserService {
 	 */
 	Users queryUserForLogin(String username,String password);
 	
+	/**
+	 * 更改用户信息
+	 * @param user
+	 * @return
+	 */
+	void updateUserInfo(Users user);
 	
+	/**
+	 * 根据用户id查询用户信息
+	 * @param user
+	 * @return
+	 */
+	Users queryUserById(String userid);
 }

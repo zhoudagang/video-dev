@@ -58,6 +58,12 @@ public class RegistLoginController {
 			return ZhouJSONResult.ok(userResult);
 		}
 	}
+	@RequestMapping("/")
+	public String login() throws Exception {
+			return "<h1>巴啦啦小魔仙全身变！</h1>";
+	}
+	
+	
 	
 
 }
