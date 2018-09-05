@@ -1,7 +1,5 @@
 package com.zhou.service.impl;
 
-import java.util.List;
-
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +7,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zhou.mapper.UsersMapper;
+import com.zhou.mapper.WxUsersMapper;
 import com.zhou.pojo.Users;
+import com.zhou.pojo.WxUsers;
 import com.zhou.service.IUserService;
 
 import tk.mybatis.mapper.entity.Example;
@@ -20,6 +20,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private UsersMapper usersMapper;
+	
+	@Autowired
+	private WxUsersMapper wxUsersMapper;
 	
 	@Autowired
 	private Sid sid;
@@ -67,6 +70,25 @@ public class UserServiceImpl implements IUserService {
 		Criteria createCriteria = userExample.createCriteria();
 		createCriteria.andEqualTo("id",userid);
 		return usersMapper.selectOneByExample(userExample);
+	}
+
+	
+	
+	//----------------------------------------------------------------
+	@Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public void insertWxUser(WxUsers user) {
+		user.setId(sid.nextShort());
+		wxUsersMapper.insert(user);		
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public WxUsers queryUserByOpendId(String openid) {
+		Example userExample = new Example(WxUsers.class);
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andEqualTo("openid",openid);
+		return wxUsersMapper.selectOneByExample(userExample);
 	}
 
 }

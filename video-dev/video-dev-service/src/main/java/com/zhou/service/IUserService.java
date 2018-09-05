@@ -1,6 +1,7 @@
 package com.zhou.service;
 
 import com.zhou.pojo.Users;
+import com.zhou.pojo.WxUsers;
 
 /**
  * @author zhougang
@@ -43,4 +44,17 @@ public interface IUserService {
 	 * @return
 	 */
 	Users queryUserById(String userid);
+	
+	
+	
+	
+	//----------------------------------------------------------------
+	
+	void insertWxUser(WxUsers users);
+	
+	
+	WxUsers queryUserByOpendId(String openid);
+	
+	
+	
 }

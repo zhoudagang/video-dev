@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.zhou.pojo.Users;
+import com.zhou.pojo.WxUsers;
 import com.zhou.service.IUserService;
 import com.zhou.utils.ZhouJSONResult;
 
@@ -88,6 +89,31 @@ public class UserController {
 	@ApiImplicitParam(name="username",value="用户名",required=true,dataType="String",paramType="query")
 	public ZhouJSONResult queryUserInfoById(String userid) throws Exception {
 		Users user = userService.queryUserById(userid);
+		return ZhouJSONResult.ok(user);
+	}
+	
+	//----------------------------------------------------------------
+	
+	@ApiOperation(value="新增用户信息", notes="新增用户信息的接口")
+	@RequestMapping("/insertWxUser")
+	@ApiImplicitParam(name="user",value="WxUsers",required=true,dataType="String",paramType="query")
+	public ZhouJSONResult insertWxUser(WxUsers user) throws Exception {
+		try {
+			WxUsers wxuser = userService.queryUserByOpendId(user.getOpenid());
+			if (wxuser == null) {
+				userService.insertWxUser(user);
+				return ZhouJSONResult.ok(user);
+			}
+			return ZhouJSONResult.errorMsg("用户已经存在");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ZhouJSONResult.errorMsg("新增用户失败");
+		}
+	}
+	
+	@RequestMapping("/queryUserInfoByOpenId")
+	public ZhouJSONResult queryUserInfoByOpenId(String openid) throws Exception {
+		WxUsers user = userService.queryUserByOpendId(openid);
 		return ZhouJSONResult.ok(user);
 	}
 
