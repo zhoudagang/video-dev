@@ -131,19 +131,52 @@ public class UserController {
 		return ZhouJSONResult.ok(user);
 	}
 	
-	@RequestMapping("/register")
-	public ZhouJSONResult register(String code, String encryptedData, String iv) throws Exception {
-		System.err.println("code"+code+"====encryptedData"+encryptedData+"====iv"+iv);
+	@RequestMapping("/login")
+	public ZhouJSONResult login(String code) throws Exception {
+		System.err.println("code:"+code);
 		
 		JSONObject SessionKeyOpenId = WxUtils.getSessionKeyOrOpenId( code );
 	    System.out.println("post请求获取的SessionAndopenId="+SessionKeyOpenId);
 	    String openid = SessionKeyOpenId.getString("openid" );
 	    String sessionKey = SessionKeyOpenId.getString( "session_key" );
 	    System.out.println("openid="+openid+",session_key="+sessionKey);
-
+		return ZhouJSONResult.ok(openid);
+	}
+	
+	
+	@RequestMapping("/register")
+	public ZhouJSONResult register(String code, String encryptedData, String iv) throws Exception {
+		System.err.println("code:"+code+"====encryptedData:"+encryptedData+"====iv"+iv);
+		
+		JSONObject SessionKeyOpenId = WxUtils.getSessionKeyOrOpenId( code );
+	    String openid = SessionKeyOpenId.getString("openid" );
+	    String sessionKey = SessionKeyOpenId.getString( "session_key" );
 	    JSONObject userInfo = WxUtils.getUserInfo( encryptedData, sessionKey, iv );
+	    System.out.println("post请求获取的SessionAndopenId="+SessionKeyOpenId);
+	    System.out.println("openid="+openid+",session_key="+sessionKey);
 	    System.out.println("根据解密算法获取的userInfo="+userInfo);
-		return ZhouJSONResult.ok();
+	    //根据解密算法获取的userInfo={"country":"China","watermark":{"appid":"wxd994f9ee4728adc2","timestamp":1536197581},"gender":1,"province":"","city":"","avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKrRoI4mO0SnLUS5wqrpCNYsUxIrlXY2uzB8xYsLUjhLK3Xt37H7eNPyWlm5TGlcmBahNU5wM3riag/132","openId":"oxsPW5ePDnlff-0A3x3jcL_3HKVg","nickName":"无赖","language":"zh_CN"}
+	    String unionId = userInfo.getString("unionId");
+	    String nickName = userInfo.getString("nickName");
+	    String province = userInfo.getString("province");
+	    String openId = userInfo.getString("openId");
+	    String city = userInfo.getString("city");
+	    String avatarUrl = userInfo.getString("avatarUrl");
+	    System.err.println(nickName);
+		WxUsers user = userService.queryUserByOpendId(openid);
+		if (user == null) { // 新增用户
+			WxUsers wxUser = new WxUsers();
+			wxUser.setNickname(nickName);
+			wxUser.setAvatarurl(avatarUrl);
+			wxUser.setProvince(province);
+			wxUser.setCity(city);
+			wxUser.setOpenid(openId);
+			wxUser.setUnionid(unionId);
+			userService.insertWxUser(wxUser);
+			return ZhouJSONResult.ok(wxUser);
+		}else {
+			return ZhouJSONResult.ok(user);
+		}
 	}
 
 	
