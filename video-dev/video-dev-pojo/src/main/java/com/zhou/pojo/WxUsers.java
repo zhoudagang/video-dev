@@ -23,6 +23,15 @@ public class WxUsers {
     @Column(name = "unionId")
     private String unionid;
 
+    @Column(name = "fans_count")
+    private Integer fansCount;
+
+    @Column(name = "follow_count")
+    private Integer followCount;
+
+    @Column(name = "receive_like_count")
+    private Integer receiveLikeCount;
+
     /**
      * @return id
      */
@@ -133,5 +142,47 @@ public class WxUsers {
      */
     public void setUnionid(String unionid) {
         this.unionid = unionid;
+    }
+
+    /**
+     * @return fans_count
+     */
+    public Integer getFansCount() {
+        return fansCount;
+    }
+
+    /**
+     * @param fansCount
+     */
+    public void setFansCount(Integer fansCount) {
+        this.fansCount = fansCount;
+    }
+
+    /**
+     * @return follow_count
+     */
+    public Integer getFollowCount() {
+        return followCount;
+    }
+
+    /**
+     * @param followCount
+     */
+    public void setFollowCount(Integer followCount) {
+        this.followCount = followCount;
+    }
+
+    /**
+     * @return receive_like_count
+     */
+    public Integer getReceiveLikeCount() {
+        return receiveLikeCount;
+    }
+
+    /**
+     * @param receiveLikeCount
+     */
+    public void setReceiveLikeCount(Integer receiveLikeCount) {
+        this.receiveLikeCount = receiveLikeCount;
     }
 }

@@ -13,5 +13,8 @@
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="unionId" jdbcType="VARCHAR" property="unionid" />
+    <result column="fans_count" jdbcType="INTEGER" property="fansCount" />
+    <result column="follow_count" jdbcType="INTEGER" property="followCount" />
+    <result column="receive_like_count" jdbcType="INTEGER" property="receiveLikeCount" />
   </resultMap>
 </mapper>
