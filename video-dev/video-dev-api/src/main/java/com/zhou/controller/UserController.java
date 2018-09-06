@@ -2,24 +2,38 @@ package com.zhou.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.AlgorithmParameters;
+import java.security.Security;
+import java.util.Arrays;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.zhou.pojo.Users;
 import com.zhou.pojo.WxUsers;
 import com.zhou.service.IUserService;
+import com.zhou.utils.HttpClientUtil;
+import com.zhou.utils.WxUtils;
 import com.zhou.utils.ZhouJSONResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import net.iharder.Base64;
 
 @RestController
 @Api(value="用户注册登录的接口", tags= {"注册和登录的controller"})
@@ -116,5 +130,22 @@ public class UserController {
 		WxUsers user = userService.queryUserByOpendId(openid);
 		return ZhouJSONResult.ok(user);
 	}
+	
+	@RequestMapping("/register")
+	public ZhouJSONResult register(String code, String encryptedData, String iv) throws Exception {
+		System.err.println("code"+code+"====encryptedData"+encryptedData+"====iv"+iv);
+		
+		JSONObject SessionKeyOpenId = WxUtils.getSessionKeyOrOpenId( code );
+	    System.out.println("post请求获取的SessionAndopenId="+SessionKeyOpenId);
+	    String openid = SessionKeyOpenId.getString("openid" );
+	    String sessionKey = SessionKeyOpenId.getString( "session_key" );
+	    System.out.println("openid="+openid+",session_key="+sessionKey);
+
+	    JSONObject userInfo = WxUtils.getUserInfo( encryptedData, sessionKey, iv );
+	    System.out.println("根据解密算法获取的userInfo="+userInfo);
+		return ZhouJSONResult.ok();
+	}
+
+	
 
 }
