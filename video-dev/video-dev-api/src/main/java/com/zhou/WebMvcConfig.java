@@ -11,6 +11,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**")
 				.addResourceLocations("classpath:/META-INF/resources/")
-				.addResourceLocations("file:C:/video_dev_face/");
+				.addResourceLocations("file:C:/zhou_videos_dev/");
 	}
 }
