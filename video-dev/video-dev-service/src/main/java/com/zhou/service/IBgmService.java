@@ -13,5 +13,5 @@ public interface IBgmService {
 	
 	List<Bgm> queryBgmList();
 	
-	
+	Bgm queryBgmById(String bgmId);
 }

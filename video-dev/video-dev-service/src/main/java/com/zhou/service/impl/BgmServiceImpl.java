@@ -24,4 +24,9 @@ public class BgmServiceImpl implements IBgmService {
 		return selectAll;
 	}
 
+	@Override
+	public Bgm queryBgmById(String bgmId) {
+		return bgmMapper.selectByPrimaryKey(bgmId);
+	}
+
 }
